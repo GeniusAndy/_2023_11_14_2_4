@@ -23,16 +23,21 @@ def getStudents(student_nums:int=1, scores_nums:int=2) -> list[list]:
 
     return students
 
-def saveToCSV(fileName:str,data:list[list],subjects_nums:int) ->None:
+def saveToCSV(fileName:str,data:list[list],subjects_nums:int) ->bool:
     fileName += ".csv"
     subjects = [f'科目{i+1}' for i in range(subjects_nums)]
     fields = ['姓名']
     fields.extend(subjects)
     with open(fileName,mode='w',encoding='utf-8',newline='')as file:
-        writer = csv.writer(file)
-        print(fields)
-        writer.writerows(fields)
-        writer.writerows(data)
+        try:
+            writer = csv.writer(file)        
+            writer.writerows(fields)
+            writer.writerows(data)
+        except:
+            return False
+        else:
+            return True
+
 
     print("檔案名稱",fileName) 
     print(f"資料:{data}")
@@ -42,4 +47,7 @@ if __name__ == '__main__':
     o_nums:int = pyip.inputInt("請輸入科目數(1~7):",min=1,max=7)
     students:list[list] = getStudents(student_nums=s_nums,scores_nums=o_nums)
     fileName = pyip.inputFilename("請輸入檔案名稱(不用輸入副檔名稱):")
-    saveToCSV(fileName=fileName,data=students,subjects_nums=o_nums)
+    if saveToCSV(fileName=fileName,data=students,subjects_nums=o_nums):
+        print("存檔成功")
+    else:
+        print("存檔失敗")
