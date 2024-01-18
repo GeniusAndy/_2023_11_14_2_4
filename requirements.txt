@@ -4,3 +4,6 @@ requests
 pandas
 matplotlib
 SQLAlchemy
+jinja2
+yfinance
+pandas_datareader
